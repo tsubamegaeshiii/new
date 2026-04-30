@@ -1,98 +1,113 @@
+/* 부드럽고 가독성 높은 폰트 설정 */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 :root {
-  --primary: #ffa07a;      /* 메인 포인트 색상 */
-  --primary-dark: #e68a65; /* 호버/진한 포인트 */
-  --bg: #F5DEB3;           /* 전체 배경 색 */
-  --text: #222222;         /* 본문 글자 색 */
-  --card-bg: #ffffff;      /* 흰색 박스 배경 */
+  --primary: #008275;      /* 나무위키 느낌의 차분한 청록색 */
+  --primary-light: #e6f3f2; /* 아주 연한 청록색 배경 (Hover용) */
+  --bg: #f4f6f8;           /* 눈이 편안한 밝은 회갈색/회색 배경 */
+  --text: #333333;         /* 완전 검은색이 아닌 부드러운 진회색 */
+  --text-muted: #6c757d;   /* 부가 설명용 연회색 */
+  --card-bg: #ffffff;      /* 깔끔한 흰색 영역 */
+  --border: #e9ecef;       /* 은은한 테두리 색상 */
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Pretendard', system-ui, sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;         /* 줄 간격을 넓혀 답답함 해소 */
+  letter-spacing: -0.02em;  /* 자간을 살짝 좁혀 글씨가 더 정돈돼 보이게 함 */
+  word-break: keep-all;     /* 단어 단위로 줄바꿈 (가독성 향상) */
 }
 
-/* 헤더 */
+/* 미니멀 스타일 헤더 (색상을 빼고 깔끔하게) */
 header {
-  padding: 3rem 1rem;
+  padding: 4rem 1rem 2rem;
   text-align: center;
-  background: var(--primary);
-  color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
 }
-header h1 { margin: 0; font-size: 2.2rem; font-weight: 700; }
-header .subtitle { margin-top: 0.5rem; opacity: 0.95; font-size: 1.1rem; }
+header h1 { 
+  margin: 0; 
+  font-size: 2.2rem; 
+  font-weight: 700; 
+  color: var(--primary); /* 이름에만 포인트 컬러 적용 */
+}
+header .subtitle { 
+  margin-top: 0.5rem; 
+  font-size: 1.05rem; 
+  color: var(--text-muted); 
+}
 
-/* 네비게이션 */
+/* 네비게이션 (둥근 알약 모양으로 부드럽게) */
 nav {
   background: var(--card-bg);
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 nav a {
-  color: var(--text);
+  color: var(--text-muted);
   text-decoration: none;
   font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px; /* 둥근 모서리로 경직된 느낌 완화 */
   transition: all 0.2s ease;
 }
 nav a:hover, nav a.active {
-  background: var(--primary);
-  color: #ffffff;
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 /* 메인 컨테이너 및 카드 레이아웃 */
 .container {
-  max-width: 900px;
-  margin: 2.5rem auto;
+  max-width: 850px;
+  margin: 3rem auto;
   padding: 0 1rem;
 }
 
 .intro-card {
   background: var(--card-bg);
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 3rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02); /* 아주 은은한 그림자 */
 }
 .intro-card h2 {
-  color: var(--primary-dark);
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 0.5rem;
+  color: var(--text);
+  font-size: 1.5rem;
   margin-top: 0;
-  display: inline-block;
+  margin-bottom: 1.5rem;
 }
 
-/* 정보 그리드 */
+/* 정보 그리드 (선 대신 면으로 구분하여 깔끔하게) */
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 .info-box {
-  background: #fff8f5;
+  background: var(--bg);
   padding: 1.5rem;
-  border-radius: 8px;
-  border-left: 4px solid var(--primary);
+  border-radius: 12px;
 }
 .info-box h3 {
   margin-top: 0;
-  color: var(--primary-dark);
+  color: var(--primary);
   font-size: 1.1rem;
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 .info-box ul {
   list-style: none;
@@ -100,29 +115,40 @@ nav a:hover, nav a.active {
   margin: 0;
 }
 .info-box li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   position: relative;
   padding-left: 1rem;
   font-size: 0.95rem;
+  color: var(--text);
 }
 .info-box li::before {
-  content: '•';
-  color: var(--primary);
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 50%;
   position: absolute;
   left: 0;
-  font-weight: bold;
+  top: 10px;
 }
 
 /* 포트폴리오 리스트 */
+.portfolio-list {
+  padding-left: 0;
+  list-style: none;
+}
 .portfolio-list li {
   margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #fff8f5;
-  border-radius: 8px;
-  border-left: 4px solid var(--primary);
+  padding: 1.5rem;
+  background: var(--bg);
+  border-radius: 12px;
+}
+.portfolio-list .desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 .portfolio-list a {
-  color: var(--primary-dark);
+  color: var(--primary);
   font-weight: bold;
   text-decoration: none;
 }
@@ -132,22 +158,27 @@ nav a:hover, nav a.active {
 .contact-form {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.8rem;
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
-.contact-form label { font-weight: bold; color: var(--primary-dark); }
+.contact-form label { font-weight: 600; color: var(--text); font-size: 0.95rem; }
 input, textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   font: inherit;
-  background: #fdfdfd;
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 button {
-  padding: 0.8rem;
+  padding: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--primary);
   color: #fff;
   cursor: pointer;
@@ -155,13 +186,14 @@ button {
   margin-top: 0.5rem;
   transition: background 0.2s;
 }
-button:hover { background: var(--primary-dark); }
+button:hover { background: #006b60; }
 
 /* 푸터 */
 footer {
   text-align: center;
-  padding: 2rem 1rem;
-  color: #666;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 600px) {
