@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D-Day 계산기 | 문정민</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>문정민</h1>
+  <p class="subtitle">사람의 온기를 전하는 예비 스포츠 캐스터</p>
+</header>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<main class="container">
+  <section class="intro-card">
+    <h2>Date 객체 활용: D-Day 계산기</h2>
+    
+    <script>
+      // 1. 오늘 날짜 객체 생성
+      let now = new Date(); 
+
+      // 2. prompt()로 사용자에게 연, 월, 일 입력받기
+      let yearStr = prompt("목표 연도를 입력하세요 (예: 2026)", "2026");
+      let monthStr = prompt("목표 월을 입력하세요 (1~12)", "12");
+      let dayStr = prompt("목표 일을 입력하세요 (1~31)", "25");
+
+      // 사용자가 '취소'를 누르거나 값을 입력하지 않은 경우
+      if (!yearStr || !monthStr || !dayStr) {
+        document.write("<p>계산을 취소했습니다.</p>");
+      } else {
+        // parseInt()를 사용해 문자열을 숫자로 변환
+        let year = parseInt(yearStr);
+        let month = parseInt(monthStr);
+        let day = parseInt(dayStr);
+
+        // 3. 입력받은 값으로 목표 날짜 객체 생성 (월은 0부터 시작하므로 -1)
+        let targetDate = new Date(year, month - 1, day); 
+
+        // 4. 날짜 차이 계산 (밀리초 단위)
+        let diffMs = targetDate.getTime() - now.getTime();
+
+        // 5. 밀리초(ms)를 일(day) 단위로 변환 및 소수점 올림
+        let diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+        // 기존 템플릿의 info-box 디자인을 활용해 결과 출력
+        document.write("<div class='info-box' style='margin-top: 20px;'>");
+        document.write("<h3>목표 날짜: " + targetDate.toLocaleDateString() + "</h3>"); 
+
+        if (diffDay === 0) {
+          document.write("<h3 style='color: #CF4500;'> D-Day 입니다!</h3>");
+        } else if (diffDay > 0) {
+          document.write("<h3 style='color: #008275;'> D-" + diffDay + "일 남았습니다.</h3>");
+        } else {
+          document.write("<h3 style='color: #696969;'> D+" + Math.abs(diffDay) + "일 지났습니다.</h3>"); 
+        }
+
+        document.write("<hr style='margin: 15px 0; border: 0; border-top: 1px dashed #ccc;'>");
+        document.write("<p style='margin-bottom: 0;'>오늘 날짜: " + now.toLocaleDateString() + "</p>");
+        document.write("<p style='font-size: 0.9em; color: gray;'><i>새로고침(F5)을 눌러 다시 계산할 수 있습니다.</i></p>");
+        document.write("</div>");
+      }
+    </script>
+  </section>
+</main>
+<footer>
+  <small>&copy; <span id="year"></span> jungmin_moon. All rights reserved.</small>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
