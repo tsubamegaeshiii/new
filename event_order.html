@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>실습 5: 스마트 피자 주문서 | 문정민</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .order-box {
+        background-color: #ffffff;
+        border: 1px solid #b2dfdb;
+        padding: 32px;
+        border-radius: 20px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .menu-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 12px 0; border-bottom: 1px solid #f1f8f7;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    
+    input[type="text"], input[type="number"] {
+        padding: 10px; border: 1.5px solid #d1cdc7; border-radius: 8px;
+        font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, input[type="number"]:focus { border-color: #008275; }
+    
+    .dom-btn {
+        padding: 14px 24px; font-size: 16px; cursor: pointer; border-radius: 12px; 
+        font-weight: 700; border: none; transition: all 0.2s;
+    }
+    .btn-submit { background-color: #008275; color: white; }
+    .btn-submit:hover { background-color: #00695c; transform: translateY(-2px); }
+    .btn-reset { background-color: #eee; color: #333; margin-left: 10px; }
+    .btn-reset:hover { background-color: #ddd; }
+  </style>
+  <script>
+    function recalc() {
+        var total = 0; 
+        var checks = document.getElementsByClassName("menu-check");
+        var qtys = document.getElementsByClassName("menu-qty");
+
+        for (var i = 0; i < checks.length; i++) {
+            if (checks[i].checked) { 
+                var price = parseInt(checks[i].value);
+                var quantity = parseInt(qtys[i].value);
+                if (isNaN(quantity) || quantity < 1) quantity = 1;
+                total += price * quantity;
+            }
+        }
+        document.getElementById("total").value = total.toLocaleString();
+        document.getElementById("rawTotal").value = total; 
+    }
+
+    function checkAddress() {
+        var addr = document.getElementById("addr");
+        if (addr.value.trim() === "") {
+            alert("배달 받으실 주소를 반드시 입력해주세요!");
+            setTimeout(function() { addr.focus(); }, 10);
+        }
+    }
+
+    function validate(e) {
+        e.preventDefault(); 
+        
+        var total = parseInt(document.getElementById("rawTotal").value);
+        var addr = document.getElementById("addr").value.trim();
+
+        if (addr === "") {
+            alert("주소가 비어있습니다. 주소를 입력해주세요.");
+            document.getElementById("addr").focus();
+            return false;
+        }
+
+        if (total === 0 || isNaN(total)) {
+            alert("상품을 적어도 하나는 선택해야 주문 가능합니다.");
+            return false;
+        }
+
+        alert("주문이 완료되었습니다! (총 결제금액: " + total.toLocaleString() + "원)\n이용해 주셔서 감사합니다.");
+        return false; 
+    }
+  </script>
+</head>
+<body>
+  <div class="floating-nav-container" style="position: sticky; top: 24px; z-index: 100; display: flex; justify-content: center; padding: 0 1rem;">
+    <nav style="background-color: white; border-radius: 999px; padding: 14px 40px; box-shadow: 0px 4px 24px rgba(0,0,0,0.04); display: flex; gap: 48px; align-items: center;">
+      <div style="font-weight: 700;">JM.MOON</div>
+      <a href="index.html" style="color: #141413; text-decoration: none; font-weight: 500;">Home</a>
+      <a href="portfolio.html" style="color: #141413; text-decoration: none; font-weight: 500;">Portfolio</a>
+    </nav>
+  </div>
+
+  <main style="max-width: 800px; margin: 80px auto 40px; padding: 0 24px;">
+    <h2 style="font-size: 32px; margin-bottom: 8px;">스마트 피자 주문서</h2>
+    <p style="color: #696969; margin-bottom: 32px;">실시간 금액 계산 및 전송 제어 이벤트 실습입니다.</p>
+    
+    <form action="#" onsubmit="return validate(event)">
+        <div class="order-box">
+            <h4 style="color: #008275; margin-bottom: 16px; font-size: 18px;">📋 메뉴 선택</h4>
+            <div class="menu-item">
+                <label><input type="checkbox" class="menu-check" value="15000" onchange="recalc()"> 콤비네이션 피자 (15,000원)</label>
+                <div><input type="number" class="menu-qty" value="1" min="1" style="width: 60px; text-align: center;" onchange="recalc()" onkeyup="recalc()"> 개</div>
+            </div>
+            <div class="menu-item">
+                <label><input type="checkbox" class="menu-check" value="12000" onchange="recalc()"> 페퍼로니 피자 (12,000원)</label>
+                <div><input type="number" class="menu-qty" value="1" min="1" style="width: 60px; text-align: center;" onchange="recalc()" onkeyup="recalc()"> 개</div>
+            </div>
+            <div class="menu-item">
+                <label><input type="checkbox" class="menu-check" value="2000" onchange="recalc()"> 치즈 토핑 추가 (2,000원)</label>
+                <div><input type="number" class="menu-qty" value="1" min="1" style="width: 60px; text-align: center;" onchange="recalc()" onkeyup="recalc()"> 개</div>
+            </div>
+            <div class="menu-item">
+                <label><input type="checkbox" class="menu-check" value="1500" onchange="recalc()"> 콜라 1.25L (1,500원)</label>
+                <div><input type="number" class="menu-qty" value="1" min="1" style="width: 60px; text-align: center;" onchange="recalc()" onkeyup="recalc()"> 개</div>
+            </div>
+        </div>
+
+        <div class="order-box">
+            <h4 style="color: #008275; margin-bottom: 16px; font-size: 18px;">📍 배송 정보</h4>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <label for="addr" style="font-weight: 700;">배달 주소</label>
+                <input type="text" id="addr" style="flex: 1;" onblur="checkAddress()" placeholder="동/호수까지 정확히 입력하세요">
+            </div>
+        </div>
+
+        <div class="order-box" style="background-color: #f1f8f7; border: none; text-align: right;">
+            <span style="font-weight: 700; font-size: 18px; margin-right: 16px;">총 주문 합계:</span>
+            <input type="text" id="total" value="0" readonly style="width: 150px; text-align: right; font-weight: 700; color: #008275; font-size: 20px; border: none; background: transparent;">
+            <span style="font-weight: 700; font-size: 18px;">원</span>
+            <input type="hidden" id="rawTotal" value="0">
+        </div>
+
+        <div style="text-align: center; margin-top: 32px;">
+            <button type="submit" class="dom-btn btn-submit">주문 결제하기</button>
+            <button type="reset" class="dom-btn btn-reset" onclick="setTimeout(recalc, 10)">초기화</button>
+        </div>
+    </form>
+  </main>
+</body>
+</html>
